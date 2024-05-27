@@ -1,9 +1,11 @@
 # Possibly requires this to be installed, depending on how libusb was installed: https://sourceforge.net/projects/libusb-win32/files/libusb-win32-releases/1.2.6.0/
+# Also requires Razer Synapse to be installed
 
 import time
 import usb.core
 import usb.util
 from usb.backend import libusb1
+import requests
 
 vid = 0x1532
 pid = 0x007b
@@ -36,3 +38,31 @@ def get_mouse():
 
 battery = get_battery_percent()
 print(battery)
+
+initialize_json = {
+    "title": "Razer Battery Indicator",
+    "description": "Razer mouse RGB battery indicator",
+    "author": {
+        "name": "Hayden Stimpson",
+        "contact": "https://haydenstimpson.github.io/"
+    },
+    "device_supported": [
+        "mouse",
+    ],
+    "category": "application"
+}
+
+
+x = requests.post("http://localhost:54235/razer/chromasdk", json=initialize_json)
+print(x.text)
+
+while True:
+    rgb_json = {
+        "effect": "CHROMA_STATIC",
+        "param": {
+            "color": 255
+        },
+    }
+    y = requests.post("http://localhost:54235/razer/chromasdk/mouse", json=rgb_json)
+    print(y.text)
+    time.sleep(5)
