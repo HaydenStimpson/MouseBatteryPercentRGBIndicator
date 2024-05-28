@@ -20,7 +20,7 @@ The solution I have come up with to solve this problem is the following steps:
     1. Most reasonable way to do this seems to be by sending a message to the mouse asking to report its battery percent.
     2. The specific message that needs to be sent was adapted from: https://github.com/hsutungyu/razer-mouse-battery-windows/tree/main
         1. For my mouse this is: b"\x00" + transaction_id + b"\x00\x00\x00\x02\x07\x80" + bytes(80) + b"\x85\x00"
-            1. To adapt this to a new mouse, update the transaction id. The '\x85' section might also become incorrect as it is based on the length of the message. 
+        2. To adapt this to a new mouse, update the transaction id. The '\x85' section might also become incorrect as it is based on the length of the message. 
     3. Record the returned battery percentage.
 3. Convert this percent into a corresponding RGB colour.
    1. Uses different colour for each stepped number. 100% is green, 0% is red.
