@@ -16,7 +16,7 @@ The solution I have come up with to solve this problem is the following steps:
     3. The transaction ID is ff, which can be determined in the 'OpenRazer' project: https://github.com/openrazer/openrazer/blob/master/driver/razermouse_driver.c
         1. Search for the razer_attr_read_charge_level function.
         2. Search for your device in the lists, and copy the corresponding transaction ID.
-2. Get the battery percent information from the mouse.
+2. Get the battery percent information from the mouse every 15 minutes.
     1. Most reasonable way to do this seems to be by sending a message to the mouse asking to report its battery percent.
     2. The specific message that needs to be sent was adapted from: https://github.com/hsutungyu/razer-mouse-battery-windows/tree/main
         1. For my mouse this is: b"\x00" + transaction_id + b"\x00\x00\x00\x02\x07\x80" + bytes(80) + b"\x85\x00"
@@ -24,8 +24,11 @@ The solution I have come up with to solve this problem is the following steps:
     3. Record the returned battery percentage.
 3. Convert this percent into a corresponding RGB colour.
    1. Uses different colour for each stepped number. 100% is green, 0% is red.
-4. Send this RGB colour to the RGB charging dock.
+4. Send this RGB colour to the RGB charging dock every 10 seconds (to maintain the connection).
     1. Use the Razer REST API to send the corresponding RGB colour to the charging dock. 
+
+## Limitations
+1. If the mouse is plugged in to charge and Razer Synapse is running, Synapse takes control of the RGB and the script cannot set the RGB anymore. Is not fixed when restarting the script, need to reboot computer or stop Synapse.
 
 ## Helpful repos for this project:
 1. https://github.com/hsutungyu/razer-mouse-battery-windows
