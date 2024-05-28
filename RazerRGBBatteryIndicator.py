@@ -60,12 +60,24 @@ print(returned_uri.text)
 uri = json.loads(returned_uri.text)['uri']
 
 
+
+def generate_hexadecimal_color(blue, green, red):
+    return '%02x%02x%02x' % (blue, green, red)
+
+def convert_battery_percent_to_color(battery_percent):
+    # Color steps from 100 to 0 % battery
+    blue = 0
+    green = int((battery_percent * 255 / 100))
+    red = int(255 - green)
+    return generate_hexadecimal_color(blue, green, red)
+
 while True:
+    color = int(convert_battery_percent_to_color(battery), 16)
     rgb_json = {
         "effect": "CHROMA_STATIC",
         "param": {
-            "color": 255
-        },
+            "color":color
+        }
     }
     color_post_return = requests.put(uri + "/mouse", json=rgb_json)
     print(color_post_return.text)
