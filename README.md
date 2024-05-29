@@ -8,6 +8,13 @@ of the mouse via the RGB of the charging dock (as the charging dock is always pl
 This behaviour is not part of the Razer RGB software.
 This software is written specifically for my mouse, though can be easily adapted for other Razer mice by updating the IDs (and possibly the battery message).
 
+# Default lighting - static colour.
+![20240529_004601](https://github.com/HaydenStimpson/MouseBatteryPercentRGBIndicator/assets/80725861/57935f17-43c7-4b45-91c2-9b7733f4c753)
+# Default charging lighting - colour represents current charge percent, but only when mouse is on the charging dock.
+![20240529_004549](https://github.com/HaydenStimpson/MouseBatteryPercentRGBIndicator/assets/80725861/032dec20-9760-4270-89ac-9447d3fa768f)
+# Non-charging lighting using this script - colour represents the current charge percent.
+![20240529_235001](https://github.com/HaydenStimpson/MouseBatteryPercentRGBIndicator/assets/80725861/84d866b7-af05-4f52-93ec-31a3c14e149d)
+
 ## Method
 The solution I have come up with to solve this problem is the following steps:
 1. Determine the various IDs of the mouse.
@@ -19,7 +26,7 @@ The solution I have come up with to solve this problem is the following steps:
 2. Get the battery percent information from the mouse every 15 minutes.
     1. Most reasonable way to do this seems to be by sending a message to the mouse asking to report its battery percent.
     2. The specific message that needs to be sent was adapted from: https://github.com/hsutungyu/razer-mouse-battery-windows/tree/main
-        1. For my mouse this is: b"\x00" + transaction_id + b"\x00\x00\x00\x02\x07\x80" + bytes(80) + b"\x85\x00"
+        1. For my mouse this is: b"\x00" + transaction_id + b"\x00\x00\x00\x02\x07\x80" + bytes(80) + b"\x85\x00".
         2. To adapt this to a new mouse, update the transaction id. The '\x85' section might also become incorrect as it is based on the length of the message. 
     3. Record the returned battery percentage.
 3. Convert this percent into a corresponding RGB colour.
@@ -27,8 +34,17 @@ The solution I have come up with to solve this problem is the following steps:
 4. Send this RGB colour to the RGB charging dock every 10 seconds (to maintain the connection).
     1. Use the Razer REST API to send the corresponding RGB colour to the charging dock. 
 
-## Limitations
-1. If the mouse is plugged in to charge and Razer Synapse is running, Synapse takes control of the RGB and the script cannot set the RGB anymore. Is not fixed when restarting the script, need to reboot computer or stop Synapse.
+## Requirements
+1. pip install pyusb
+2. pip install libusb.
+3. pip install requests.
+4. Razer Synapse - Software needed to run it's server so the script can send messages to the server.
+5. Possibly: https://sourceforge.net/projects/libusb-win32/files/libusb-win32-releases/1.2.6.0/ - Depending on if libusb gets installed correctly.
+
+## Instructions to use
+1. Replace the 'vid', 'pid', and 'transaction_id' variables if needed.
+2. Run program with 'python RazerRGBBatteryIndicator'.
+3. Optionally set up Windows Task Scheduler to run the script on computer start.
 
 ## Helpful repos for this project:
 1. https://github.com/hsutungyu/razer-mouse-battery-windows
