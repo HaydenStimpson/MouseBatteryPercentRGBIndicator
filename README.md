@@ -1,4 +1,4 @@
-# Razer RGB Mouse Battery Indicator
+# Charging Dock RGB Battery Indicator
 
 ## Introduction
 Recently I bought a new mouse - the Razer Viper Ultimate wireless mouse.
