@@ -9,11 +9,12 @@ This behaviour is not part of the Razer RGB software.
 This software is written specifically for my mouse, though can be easily adapted for other Razer mice by updating the IDs (and possibly the battery message).
 
 # Default lighting - static colour.
-![20240529_004601](https://github.com/HaydenStimpson/MouseBatteryPercentRGBIndicator/assets/80725861/57935f17-43c7-4b45-91c2-9b7733f4c753 | width=100)
+![Charging dock with no mouse - purple colour](https://github.com/HaydenStimpson/MouseBatteryPercentRGBIndicator/assets/80725861/57935f17-43c7-4b45-91c2-9b7733f4c753 | width=100)
 # Default charging lighting - colour represents current charge percent, but only when mouse is on the charging dock.
-![20240529_004549](https://github.com/HaydenStimpson/MouseBatteryPercentRGBIndicator/assets/80725861/032dec20-9760-4270-89ac-9447d3fa768f | width=100)
+![Charging dock with mouse charging - orange colour representing battery charge](https://github.com/HaydenStimpson/MouseBatteryPercentRGBIndicator/assets/80725861/032dec20-9760-4270-89ac-9447d3fa768f | width=100)
 # Non-charging lighting using this script - colour represents the current charge percent.
-![20240529_235001](https://github.com/HaydenStimpson/MouseBatteryPercentRGBIndicator/assets/80725861/84d866b7-af05-4f52-93ec-31a3c14e149d | width=100)
+![Charging dock with no mouse - orange colour representing battery charge](https://github.com/HaydenStimpson/MouseBatteryPercentRGBIndicator/assets/80725861/84d866b7-af05-4f52-93ec-31a3c14e149d | width=100)
+<img src="https://github.com/HaydenStimpson/MouseBatteryPercentRGBIndicator/assets/80725861/84d866b7-af05-4f52-93ec-31a3c14e149d" width="100">
 
 ## Method
 The solution I have come up with to solve this problem is the following steps:
