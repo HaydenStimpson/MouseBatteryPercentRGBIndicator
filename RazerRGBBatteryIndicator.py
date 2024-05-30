@@ -2,7 +2,7 @@
 # Also requires Razer Synapse to be installed
 import json
 import time
-import usb.core
+import usb.core # pip install pyusb
 import usb.util
 from usb.backend import libusb1
 import requests
@@ -79,6 +79,9 @@ def convert_battery_percent_to_color(battery_percent):
     except:
         print("Battery percent is invalid.")
 
+# Variable to remember most recent battery percent. So if mouse goes to sleep due to inactivity, charging dock colour stays the same.
+previous_battery = 0
+
 uri = find_device_uri()
 if uri == 0:
     # Try again
@@ -91,6 +94,11 @@ if uri != 0:
             # Try again if return 0 - this seems to be the default if the device can't return the correct number.
             # Trying again tends to fix the connection and get the correct percent.
             battery = get_battery_percent()
+        # If battery still zero, use previous battery result
+        if battery == 0:
+            battery = previous_battery
+        else:
+            previous_battery = battery
         print(battery)
         # Need to update API every 10 seconds to maintain connection
         for x in range(90):
