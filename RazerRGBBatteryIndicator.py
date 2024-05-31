@@ -72,9 +72,30 @@ def find_device_uri():
 def convert_battery_percent_to_color(battery_percent):
     """Generate RGB values scaling smoothly from green to red based on battery percent."""
     try:
+        # Convert back to hex, then multiply by 2 for better colour changes
+        battery_hex_percent = int((battery_percent * 255 / 100) * 2)
+        '''
+                  red,    green
+        100   =   0,      255   
+        75    =   128,    255
+        50    =   255,    255
+        25    =   255,    128
+        0     =   255,    0
+        '''
         blue = 0
-        green = int((battery_percent * 255 / 100))
-        red = int(255 - green)
+        # Over 50%
+        if battery_hex_percent > 255:
+            green = 255
+            red = battery_hex_percent - 255
+        # Below 25% - exaggerate low battery. Show max red value from about 10%
+        elif battery_hex_percent < 128:
+            green = max(battery_hex_percent - 50, 0)
+            red = 255
+        # 26% - 50%
+        else:
+            green = battery_hex_percent
+            red = 255
+
         return '%02x%02x%02x' % (blue, green, red)
     except:
         print("Battery percent is invalid.")
