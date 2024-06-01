@@ -86,7 +86,7 @@ def convert_battery_percent_to_color(battery_percent):
         # Over 50%
         if battery_hex_percent > 255:
             green = 255
-            red = battery_hex_percent - 255
+            red = 510 - battery_hex_percent
         # Below 25% - exaggerate low battery. Show max red value from about 10%
         elif battery_hex_percent < 128:
             green = max(battery_hex_percent - 50, 0)
